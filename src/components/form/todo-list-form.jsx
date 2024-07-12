@@ -1,9 +1,7 @@
 'use client'
 import React, { useState } from 'react'
 import Task from './task';
-import Image from 'next/image';
-import checkBox from "../../../public/checkbox.svg"
-
+import axios from 'axios';
 
 
 const ToDoListForm = ({ listTitle }) => {
@@ -22,11 +20,22 @@ const ToDoListForm = ({ listTitle }) => {
         setTask(e.target.value);
     }
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        setTasks(prev => [...prev, task.trim()])
-        setTask('')
-        setShowForm(false);
+    const handleSubmit = async (e) => {
+        try {
+
+            ///todo-list/daily%20chores
+
+            e.preventDefault();
+
+            const response = await axios.post('http://localhost:3000/api/tasks', { taskList: listTitle, task })
+            console.log(response);
+            setTasks(prev => [...prev, task.trim()])
+            setTask('')
+            setShowForm(false);
+        } catch (error) {
+            console.log("ERROR: ", error);
+        }
+
     }
 
     const markAsCompleted = (e) => {

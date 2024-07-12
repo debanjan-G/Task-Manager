@@ -18,7 +18,7 @@ export async function POST(req) {
       {
         successs: true,
         savedList: newTaskList,
-        url: `/todo-list/${taskTitle.title.toLowerCase()}`,
+        url: `/todo-list/${taskTitle.title}`,
       },
       { status: 201 }
     );

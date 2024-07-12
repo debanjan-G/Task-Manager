@@ -18,7 +18,7 @@ export async function POST(req) {
     if (!taskList) {
       return NextResponse.json(
         { success: false, msg: "No such list found" },
-        { status: 201 }
+        { status: 400 }
       );
     }
 
