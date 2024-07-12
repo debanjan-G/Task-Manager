@@ -5,11 +5,12 @@ import Image from 'next/image';
 import checkBox from "../../../public/checkbox.svg"
 
 
+
 const ToDoListForm = ({ listTitle }) => {
 
     const [showForm, setShowForm] = useState(false);
     const [task, setTask] = useState('')
-    const [tasks, setTasks] = useState([]);
+    const [tasks, setTasks] = useState(["Clean Room", "Wash Dishes", "Cook Meal"]);
     const [markComplete, setMarkComplete] = useState(false);
 
 

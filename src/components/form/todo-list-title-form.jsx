@@ -1,6 +1,7 @@
 'use client'
 import React, { useState } from 'react'
 import { useRouter } from 'next/navigation';
+import { connectDB } from '@/lib/connectDB';
 
 
 const ToDoListTitleForm = () => {
@@ -12,7 +13,7 @@ const ToDoListTitleForm = () => {
         setListName(listName);
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         router.push(`todo-list/${listName}`)
     }
