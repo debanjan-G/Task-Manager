@@ -1,9 +1,10 @@
 import React from 'react'
 
-const Task = ({ task }) => {
+const Task = ({ task, isComplete }) => {
+    const markingClass = (isComplete) && 'line-through'
     return (
         <div>
-            <p className='my-4 text-xl text-slate-700 font-light'>{task}</p>
+            <p className={`${markingClass} my-4 text-xl text-slate-700 font-light`}>{task}</p>
         </div>
     )
 }
