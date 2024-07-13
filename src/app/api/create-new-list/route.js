@@ -5,11 +5,24 @@ import { NextResponse } from "next/server";
 export async function POST(req) {
   try {
     await connectDB();
-    const taskTitle = await req.json(); // get the List title from req body
+    const reqBody = await req.json(); // get the List title from req body
+    const taskTitle = reqBody.title;
 
+    // check if task list already exists
+    const taskList = await TaskList.findOne({ title: taskTitle });
+
+    if (taskList) {
+      console.log("TaskList already exists.");
+      return NextResponse.json({
+        msg: "Task List Already exists",
+        url: `/todo-list/${taskTitle}`,
+      });
+    }
+
+    // If Task List doesn't exist
     // create a new document
     const newTaskList = new TaskList({
-      title: taskTitle.title,
+      title: taskTitle,
     });
 
     await newTaskList.save();
@@ -18,7 +31,7 @@ export async function POST(req) {
       {
         successs: true,
         savedList: newTaskList,
-        url: `/todo-list/${taskTitle.title}`,
+        url: `/todo-list/${taskTitle}`,
       },
       { status: 201 }
     );

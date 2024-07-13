@@ -18,6 +18,10 @@ const ToDoListTitleForm = () => {
 
         try {
             e.preventDefault();
+
+            // Check if TaskList already exists
+            
+
             const response = await axios.post('http://localhost:3000/api/create-new-list', { title: listName })
             const url = await response.data.url;
             router.push(url)

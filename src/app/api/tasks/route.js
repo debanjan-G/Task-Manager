@@ -8,8 +8,8 @@ import { list } from "postcss";
 
 export async function GET(req) {
   try {
+    // connecting to the DB
     await connectDB();
-
     // get the list title
     const queryParams = req.nextUrl.searchParams;
     const listTitle = queryParams.get("list");

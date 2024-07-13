@@ -1,5 +1,5 @@
 'use client'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Task from './task';
 import axios from 'axios';
 
@@ -10,6 +10,23 @@ const ToDoListForm = ({ listTitle }) => {
     const [task, setTask] = useState('')
     const [tasks, setTasks] = useState([]);
     const [markComplete, setMarkComplete] = useState(false);
+
+    useEffect(() => {
+
+        const fetchTasks = async () => {
+            try {
+                const response = await axios.get(`http://localhost:3000/api/tasks?list=${listTitle}`)
+                const fetchedTasks = response.data.tasks;
+                console.log("Fetched Tasks: ", fetchedTasks);
+                setTasks(fetchedTasks);
+            } catch (error) {
+                console.log("ERROR: ", error);
+            }
+        }
+
+        fetchTasks();
+
+    }, [])
 
 
     const handleClick = () => {
@@ -55,7 +72,7 @@ const ToDoListForm = ({ listTitle }) => {
                     return (
                         <div key={index} className='text-left px-8 flex gap-4'>
                             <input type='checkbox' onClick={markAsCompleted} />
-                            <Task task={task} isComplete={markComplete} />
+                            <Task task={task.task} isComplete={markComplete} />
                         </div>
                     )
                 })
