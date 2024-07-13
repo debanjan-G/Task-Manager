@@ -1,7 +1,8 @@
 'use client'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useSyncExternalStore } from 'react'
 import Task from './task';
 import axios from 'axios';
+import Loading from '../ui/Loading/Loading';
 
 
 const ToDoListForm = ({ listTitle }) => {
@@ -10,23 +11,28 @@ const ToDoListForm = ({ listTitle }) => {
     const [task, setTask] = useState('')
     const [tasks, setTasks] = useState([]);
     const [markComplete, setMarkComplete] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-
-        const fetchTasks = async () => {
-            try {
-                const response = await axios.get(`http://localhost:3000/api/tasks?list=${listTitle}`)
-                const fetchedTasks = response.data.tasks;
-                console.log("Fetched Tasks: ", fetchedTasks);
-                setTasks(fetchedTasks);
-            } catch (error) {
-                console.log("ERROR: ", error);
-            }
-        }
-
         fetchTasks();
-
+        setIsLoading(false)
     }, [])
+
+    const fetchTasks = async () => {
+        try {
+            setIsLoading(true);
+            const response = await axios.get(
+                `http://localhost:3000/api/tasks?list=${listTitle}`
+            );
+            const fetchedTasks = response.data.tasks;
+            console.log("Fetched Tasks: ", fetchedTasks);
+            setTasks(fetchedTasks);
+        } catch (error) {
+            console.log("ERROR: ", error);
+        } finally {
+            setIsLoading(false);
+        }
+    };
 
 
     const handleClick = () => {
@@ -39,18 +45,21 @@ const ToDoListForm = ({ listTitle }) => {
 
     const handleSubmit = async (e) => {
         try {
-
+            setIsLoading(true)
             ///todo-list/daily%20chores
 
             e.preventDefault();
 
             const response = await axios.post('http://localhost:3000/api/tasks', { taskList: listTitle, task })
             console.log(response);
-            setTasks(prev => [...prev, task.trim()])
+            // Fetching the tasks from DB to update the list on screen
+            await fetchTasks();
             setTask('')
             setShowForm(false);
         } catch (error) {
             console.log("ERROR: ", error);
+        } finally {
+            setIsLoading(false)
         }
 
     }
@@ -87,8 +96,10 @@ const ToDoListForm = ({ listTitle }) => {
                     ?
                     <form onSubmit={handleSubmit} className='flex flex-col gap-4'>
                         <input onChange={handleChange} type="text" value={task} placeholder='Add Task' className="text-xl font-bold shadow-md p-4 rounded-sm w-1/4 mx-auto " required />
+                        {isLoading && <div className='flex justify-center'>  <Loading /></div>}
+
                         <div className="flex justify-center w-1/4 mx-auto gap-4">
-                            <button type='submit' className=" mx-auto bg-[#4D869C] p-4 text-white font-bold hover:bg-[#0E7490] rounded-2xl w-full">Add Task</button>
+                            <button type='submit' className=" mx-auto bg-[#6aadc8] p-4 text-white font-bold hover:bg-[#0E7490] rounded-2xl w-full">Add Task</button>
                             <button type='reset' onClick={() => setShowForm(false)} className="mx-auto bg-white p-4 text-[#4D869C] font-bold hover:bg-teal-100 rounded-2xl w-full">Cancel</button>
                         </div>
                     </form>
