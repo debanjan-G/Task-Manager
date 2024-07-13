@@ -8,7 +8,7 @@ const ToDoListForm = ({ listTitle }) => {
 
     const [showForm, setShowForm] = useState(false);
     const [task, setTask] = useState('')
-    const [tasks, setTasks] = useState(["Clean Room", "Wash Dishes", "Cook Meal"]);
+    const [tasks, setTasks] = useState([]);
     const [markComplete, setMarkComplete] = useState(false);
 
 
