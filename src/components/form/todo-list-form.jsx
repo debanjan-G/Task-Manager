@@ -10,7 +10,7 @@ const ToDoListForm = ({ listTitle }) => {
     const [showForm, setShowForm] = useState(false);
     const [task, setTask] = useState('')
     const [tasks, setTasks] = useState([]);
-    const [markComplete, setMarkComplete] = useState(false);
+    // const [markComplete, setMarkComplete] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
@@ -59,12 +59,6 @@ const ToDoListForm = ({ listTitle }) => {
         } finally {
             setIsLoading(false)
         }
-
-    }
-
-    const markAsCompleted = (e) => {
-        console.log("Task with ID " + (Number(e.target.id) + 1) + " has been marked complete.");
-        setMarkComplete(prev => !prev);
     }
 
 
@@ -77,7 +71,7 @@ const ToDoListForm = ({ listTitle }) => {
             <div className='w-1/4 p-4 bg-white flex flex-col justify-center  gap-4 shadow-lg'>
                 {(tasks.length !== 0) ? (tasks.map((task, index) => {
                     return (
-                        <Task key={index} task={task.task} isComplete={markComplete} onComplete={markAsCompleted} id={index} />
+                        <Task key={index} task={task} />
                     )
                 })
                 ) : <p className=" my-4 text-xl text-center text-slate-700 font-light">Your To-Do List is Empty!</p>}

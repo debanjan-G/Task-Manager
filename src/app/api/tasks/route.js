@@ -79,6 +79,9 @@ export async function POST(req) {
 // Mark Task as Completed
 export async function PUT(req) {
   try {
+    const reqBody = await req.json();
+    console.log(reqBody);
+    const checked = reqBody.checked;
     // getting the ID of the task whose isComplete field is to be toggled
     const taskID = req.nextUrl.searchParams.get("listID");
 
@@ -92,7 +95,9 @@ export async function PUT(req) {
       );
     }
 
-    const isComplete = !taskToMark.isCompleted;
+    console.log(taskToMark);
+
+    const isComplete = checked ? true : false;
 
     // if task exists, we update the field (toggle the isCompleted field)
     const updatedTask = await Task.findByIdAndUpdate(
