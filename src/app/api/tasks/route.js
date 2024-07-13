@@ -5,7 +5,6 @@ import Task from "@/lib/models/task-model";
 import { list } from "postcss";
 
 // Get all tasks
-
 export async function GET(req) {
   try {
     // connecting to the DB
@@ -74,5 +73,46 @@ export async function POST(req) {
   } catch (error) {
     console.log("Error: ", error);
     return NextResponse.json({ error });
+  }
+}
+
+// Mark Task as Completed
+export async function PUT(req) {
+  try {
+    // getting the ID of the task whose isComplete field is to be toggled
+    const taskID = req.nextUrl.searchParams.get("listID");
+
+    // getting the task by ID
+    const taskToMark = await Task.findById(taskID);
+    // if task doesn't exist
+    if (!taskToMark) {
+      return NextResponse.json(
+        { success: false, msg: "No Such Task Found!" },
+        { status: 404 }
+      );
+    }
+
+    const isComplete = !taskToMark.isCompleted;
+
+    // if task exists, we update the field (toggle the isCompleted field)
+    const updatedTask = await Task.findByIdAndUpdate(
+      taskID,
+      {
+        isCompleted: isComplete,
+      },
+      { new: true }
+    );
+
+    return NextResponse.json(
+      {
+        success: true,
+        updatedTask: updatedTask,
+        isComplete: isComplete,
+      },
+      { status: 200 }
+    );
+  } catch (error) {
+    console.log("ERROR: ", error);
+    return NextResponse.json({ success: false, error }, { status: 500 });
   }
 }

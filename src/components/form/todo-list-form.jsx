@@ -46,8 +46,6 @@ const ToDoListForm = ({ listTitle }) => {
     const handleSubmit = async (e) => {
         try {
             setIsLoading(true)
-            ///todo-list/daily%20chores
-
             e.preventDefault();
 
             const response = await axios.post('http://localhost:3000/api/tasks', { taskList: listTitle, task })
@@ -65,7 +63,7 @@ const ToDoListForm = ({ listTitle }) => {
     }
 
     const markAsCompleted = (e) => {
-        console.log("Task with ID " + (e.target.id + 1) + " has been marked complete.");
+        console.log("Task with ID " + (Number(e.target.id) + 1) + " has been marked complete.");
         setMarkComplete(prev => !prev);
     }
 
@@ -79,10 +77,7 @@ const ToDoListForm = ({ listTitle }) => {
             <div className='w-1/4 p-4 bg-white flex flex-col justify-center  gap-4 shadow-lg'>
                 {(tasks.length !== 0) ? (tasks.map((task, index) => {
                     return (
-                        <div key={index} className='text-left px-8 flex gap-4'>
-                            <input type='checkbox' onClick={markAsCompleted} />
-                            <Task task={task.task} isComplete={markComplete} />
-                        </div>
+                        <Task key={index} task={task.task} isComplete={markComplete} onComplete={markAsCompleted} id={index} />
                     )
                 })
                 ) : <p className=" my-4 text-xl text-center text-slate-700 font-light">Your To-Do List is Empty!</p>}
