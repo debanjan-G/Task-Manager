@@ -64,11 +64,11 @@ const ToDoListForm = ({ listTitle }) => {
 
     return (
         <div className='flex flex-col min-h-[75vh] items-center justify-center gap-4 w-full'>
-            <div className=' bg-[#4D869C] p-4 text-white text-xl font-bold text-center w-1/4'>
+            <div className=' bg-[#4D869C] p-4 text-white text-xl font-bold text-center w-1/3'>
                 <h1>{listTitle} todo</h1>
             </div>
 
-            <div className='w-1/4 p-4 bg-white flex flex-col justify-center  gap-4 shadow-lg'>
+            <div className='w-1/3 p-4 bg-white flex flex-col justify-center  gap-4 shadow-lg'>
                 {(tasks.length !== 0) ? (tasks.map((task, index) => {
                     return (
                         <Task key={index} task={task} />
