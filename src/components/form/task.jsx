@@ -1,10 +1,24 @@
 import React, { useState } from 'react'
 import axios from 'axios'
 import DeleteIcon from '../ui/DeleteIcon'
+import Loading from '../ui/Loading/Loading'
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+    AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
+
 
 const Task = ({ task, fetchTasks }) => {
 
     const [isComplete, setIsComplete] = useState(false)
+    const [loading, setLoading] = useState(false);
 
     const toggleMark = async (e) => {
         try {
@@ -23,22 +37,45 @@ const Task = ({ task, fetchTasks }) => {
 
     const deleteTask = async () => {
         try {
+            setLoading(true)
             const response = await axios.delete(`http://localhost:3000/api/tasks/${task._id}`)
             console.log("Deleted Task = ", response.data.deletedTask);
             await fetchTasks();
         } catch (error) {
             console.log("Something Went Wrong: ", error);
+        } finally {
+            setLoading(false)
         }
     }
 
     const markingClass = (isComplete) && 'line-through'
     return (
-        <div className='text-left px-8 flex items-center gap-4'>
-            <input type='checkbox' onClick={toggleMark} />
-            <p className={`${markingClass} my-4 text-xl text-slate-700 font-light`}>{task.task}</p>
-            {isComplete && <span onClick={deleteTask} className='hover:cursor-pointer opacity-85 hover:opacity-100 hover:scale-105 duration-200 transition'> <DeleteIcon /></span>}
+        <>
+            {loading ? <div className='w-full flex justify-center'> <Loading /> </div> :
+                <div className='text-left px-8 flex items-center gap-4'>
 
-        </div>
+                    <input type='checkbox' onClick={toggleMark} />
+                    <p className={`${markingClass} my-4 text-xl text-slate-700 font-light`}>{task.task}</p>
+                    {isComplete &&
+                        <AlertDialog>
+                            <AlertDialogTrigger><DeleteIcon /></AlertDialogTrigger>
+                            <AlertDialogContent>
+                                <AlertDialogHeader>
+                                    <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                                    <AlertDialogDescription>
+                                        This action is irreversible. Deleting this task will permanently remove it from the list and cannot be undone.
+                                    </AlertDialogDescription>
+                                </AlertDialogHeader>
+                                <AlertDialogFooter>
+                                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                    <AlertDialogAction className='bg-red-500 hover:bg-red-700' onClick={deleteTask}>Continue</AlertDialogAction>
+                                </AlertDialogFooter>
+                            </AlertDialogContent>
+                        </AlertDialog>
+                    }
+
+                </div>}
+        </>
     )
 }
 
