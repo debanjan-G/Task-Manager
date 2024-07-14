@@ -12,7 +12,6 @@ export async function GET(req) {
     // get the list title
     const queryParams = req.nextUrl.searchParams;
     const listTitle = queryParams.get("list");
-    console.log("LIST TITLE = ", listTitle);
 
     // get the List document from DB
     const list = await TaskList.findOne({ title: listTitle });
@@ -42,8 +41,6 @@ export async function POST(req) {
     await connectDB();
     const reqBody = await req.json();
 
-    console.log(reqBody);
-
     const taskListName = reqBody.taskList;
     const task = reqBody.task;
 
@@ -65,7 +62,6 @@ export async function POST(req) {
     // saving the document
     await newTask.save();
 
-    console.log(reqBody);
     return NextResponse.json(
       { success: true, savedTask: newTask },
       { status: 201 }
@@ -73,51 +69,5 @@ export async function POST(req) {
   } catch (error) {
     console.log("Error: ", error);
     return NextResponse.json({ error });
-  }
-}
-
-// Mark Task as Completed
-export async function PUT(req) {
-  try {
-    const reqBody = await req.json();
-    console.log(reqBody);
-    const checked = reqBody.checked;
-    // getting the ID of the task whose isComplete field is to be toggled
-    const taskID = req.nextUrl.searchParams.get("listID");
-
-    // getting the task by ID
-    const taskToMark = await Task.findById(taskID);
-    // if task doesn't exist
-    if (!taskToMark) {
-      return NextResponse.json(
-        { success: false, msg: "No Such Task Found!" },
-        { status: 404 }
-      );
-    }
-
-    console.log(taskToMark);
-
-    const isComplete = checked ? true : false;
-
-    // if task exists, we update the field (toggle the isCompleted field)
-    const updatedTask = await Task.findByIdAndUpdate(
-      taskID,
-      {
-        isCompleted: isComplete,
-      },
-      { new: true }
-    );
-
-    return NextResponse.json(
-      {
-        success: true,
-        updatedTask: updatedTask,
-        isComplete: isComplete,
-      },
-      { status: 200 }
-    );
-  } catch (error) {
-    console.log("ERROR: ", error);
-    return NextResponse.json({ success: false, error }, { status: 500 });
   }
 }

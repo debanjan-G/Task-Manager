@@ -3,14 +3,30 @@ import React, { useEffect, useState, useSyncExternalStore } from 'react'
 import Task from './task';
 import axios from 'axios';
 import Loading from '../ui/Loading/Loading';
+import { useRouter } from 'next/navigation';
+
+
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+    AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
+import DeleteTaskListIcon from '../ui/DeleteTaskListIcon';
+
 
 
 const ToDoListForm = ({ listTitle }) => {
+    const router = useRouter()
 
     const [showForm, setShowForm] = useState(false);
     const [task, setTask] = useState('')
     const [tasks, setTasks] = useState([]);
-    // const [markComplete, setMarkComplete] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
@@ -31,6 +47,7 @@ const ToDoListForm = ({ listTitle }) => {
             console.log("ERROR: ", error);
         } finally {
             setIsLoading(false);
+
         }
     };
 
@@ -66,11 +83,57 @@ const ToDoListForm = ({ listTitle }) => {
         setTask('')
     }
 
+    const deleteList = async (e) => {
+        try {
+            setIsLoading(true)
+            const response = await axios.delete(`http://localhost:3000/api/delete-list/${listTitle}`)
+            console.log("To-Do List successfully deleted.");
+            await fetchTasks();
+        } catch (error) {
+            console.log("ERROR: ");
+        } finally {
+            setIsLoading(false)
+            router.push('/')
+        }
+
+    }
+
 
     return (
         <div className='flex flex-col min-h-[75vh] items-center justify-center gap-4 w-full'>
-            <div className=' bg-[#4D869C] p-4  w-1/3'>
-                <h1 className='text-white text-2xl font-semibold text-center'>{listTitle} TO-DO</h1>
+            <div className=' bg-[#4D869C] flex items-center justify-between p-4  w-1/3'>
+                <h1 className='text-white text-2xl font-semibold text-center'>{listTitle} TO-DO
+                </h1>
+
+
+
+                <AlertDialog>
+                    <AlertDialogTrigger>
+
+                        <DeleteTaskListIcon />
+
+                    </AlertDialogTrigger>
+                    <AlertDialogContent>
+                        <AlertDialogHeader>
+                            <AlertDialogTitle>Do you want to delete this To-Do List?</AlertDialogTitle>
+                            <AlertDialogDescription>
+                                This action cannot be undone and will permanently remove all tasks associated with it from our servers.
+                            </AlertDialogDescription>
+                        </AlertDialogHeader>
+                        <AlertDialogFooter>
+                            <AlertDialogCancel>Cancel</AlertDialogCancel>
+                            <AlertDialogAction className='bg-red-400 hover:bg-red-600' onClick={deleteList}>Continue</AlertDialogAction>
+                        </AlertDialogFooter>
+                    </AlertDialogContent>
+                </AlertDialog>
+
+
+
+                {/* </DropdownMenuItem>
+                    </DropdownMenuContent>
+                </DropdownMenu> */}
+
+
             </div>
 
             <div className='w-1/3 p-4 bg-white flex flex-col justify-center  gap-4 shadow-lg'>

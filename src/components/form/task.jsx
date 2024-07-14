@@ -20,21 +20,6 @@ const Task = ({ task, fetchTasks }) => {
     const [isComplete, setIsComplete] = useState(false)
     const [loading, setLoading] = useState(false);
 
-    // const toggleMark = async (e) => {
-    //     try {
-    //         const checked = e.target.checked;
-    //         const taskID = task._id;
-
-
-    //         const response = await axios.put(`http://localhost:3000/api/tasks?listID=${taskID}`, { checked })
-    //         console.log(response);
-    //         setIsComplete(response.data.isComplete)
-
-    //     } catch (error) {
-    //         console.log("ERROR: ", error);
-    //     }
-    // }
-
     const deleteTask = async () => {
         try {
             setLoading(true)
@@ -66,7 +51,9 @@ const Task = ({ task, fetchTasks }) => {
                     <p className={`${markingClass} my-4 text-xl text-slate-700 font-light`}>{task.task}</p>
                     {isComplete &&
                         <AlertDialog>
-                            <AlertDialogTrigger><DeleteIcon /></AlertDialogTrigger>
+                            <AlertDialogTrigger>
+                                <DeleteIcon />
+                            </AlertDialogTrigger>
                             <AlertDialogContent>
                                 <AlertDialogHeader>
                                     <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
