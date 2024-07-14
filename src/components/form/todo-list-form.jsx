@@ -71,7 +71,7 @@ const ToDoListForm = ({ listTitle }) => {
             <div className='w-1/3 p-4 bg-white flex flex-col justify-center  gap-4 shadow-lg'>
                 {(tasks.length !== 0) ? (tasks.map((task, index) => {
                     return (
-                        <Task key={index} task={task} />
+                        <Task key={index} task={task} fetchTasks={fetchTasks} />
                     )
                 })
                 ) : <p className=" my-4 text-xl text-center text-slate-700 font-light">Your To-Do List is Empty!</p>}
@@ -92,7 +92,7 @@ const ToDoListForm = ({ listTitle }) => {
                             <button type='reset' onClick={() => setShowForm(false)} className="mx-auto bg-white p-4 text-[#4D869C] font-bold hover:bg-teal-100 rounded-2xl w-full">Cancel</button>
                         </div>
                     </form>
-                    : <button onClick={handleClick} className="w-1/6 mx-auto bg-[#4D869C] p-4 text-white font-bold hover:bg-[#0E7490] rounded-2xl">+ New Task</button>}
+                    : <button onClick={handleClick} className="w-1/6 mx-auto bg-[#4D869C] p-4 text-white font-bold hover:bg-[#0E7490] rounded-2xl"><span className='text-xl'>+</span> New Task</button>}
 
 
             </div>

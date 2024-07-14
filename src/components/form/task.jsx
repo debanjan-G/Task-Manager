@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import axios from 'axios'
 import DeleteIcon from '../ui/DeleteIcon'
 
-const Task = ({ task }) => {
+const Task = ({ task, fetchTasks }) => {
 
     const [isComplete, setIsComplete] = useState(false)
 
@@ -23,7 +23,9 @@ const Task = ({ task }) => {
 
     const deleteTask = async () => {
         try {
-            console.log("Deleting Task with ID: ", task._id);
+            const response = await axios.delete(`http://localhost:3000/api/tasks/${task._id}`)
+            console.log("Deleted Task = ", response.data.deletedTask);
+            await fetchTasks();
         } catch (error) {
             console.log("Something Went Wrong: ", error);
         }
