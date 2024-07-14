@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import axios from 'axios'
+import DeleteIcon from '../ui/DeleteIcon'
 
 const Task = ({ task }) => {
 
@@ -20,11 +21,20 @@ const Task = ({ task }) => {
         }
     }
 
+    const deleteTask = async () => {
+        try {
+            console.log("Deleting Task with ID: ", task._id);
+        } catch (error) {
+            console.log("Something Went Wrong: ", error);
+        }
+    }
+
     const markingClass = (isComplete) && 'line-through'
     return (
-        <div className='text-left px-8 flex gap-4'>
+        <div className='text-left px-8 flex items-center gap-4'>
             <input type='checkbox' onClick={toggleMark} />
             <p className={`${markingClass} my-4 text-xl text-slate-700 font-light`}>{task.task}</p>
+            {isComplete && <span onClick={deleteTask} className='hover:cursor-pointer opacity-85 hover:opacity-100 hover:scale-105 duration-200 transition'> <DeleteIcon /></span>}
 
         </div>
     )
