@@ -13,7 +13,7 @@ const Header = () => {
             {/* <p className="text-xl font-bold hover:text-blue-500 transition duration-300 ">
   Hover over me for a glow effect!
 </p> */}
-            <Link href='/' className={`${hoverStyle}  text-4xl font-extrabold text-center text-white  duration-300 transition ease-in-out`}>NEXTGEN TO-DO</Link>
+            <Link href='/' className={`${hoverStyle}  text-4xl font-extrabold text-center text-white  duration-300 transition ease-in-out`}>TaskTrackr</Link>
         </div>
     )
 }
