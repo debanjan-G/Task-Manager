@@ -61,11 +61,16 @@ const ToDoListForm = ({ listTitle }) => {
         }
     }
 
+    const closeAddNewTaskForm = () => {
+        setShowForm(false)
+        setTask('')
+    }
+
 
     return (
         <div className='flex flex-col min-h-[75vh] items-center justify-center gap-4 w-full'>
-            <div className=' bg-[#4D869C] p-4 text-white text-xl font-bold text-center w-1/3'>
-                <h1>{listTitle} todo</h1>
+            <div className=' bg-[#4D869C] p-4  w-1/3'>
+                <h1 className='text-white text-2xl font-semibold text-center'>{listTitle} TO-DO</h1>
             </div>
 
             <div className='w-1/3 p-4 bg-white flex flex-col justify-center  gap-4 shadow-lg'>
@@ -85,12 +90,12 @@ const ToDoListForm = ({ listTitle }) => {
                     ?
                     <form onSubmit={handleSubmit} className='flex flex-col gap-4'>
                         <input onChange={handleChange} type="text" value={task} placeholder='Add Task' className="text-xl font-bold shadow-md p-4 rounded-sm w-1/4 mx-auto " required />
-                        
+
                         {isLoading && <div className='flex justify-center'>  <Loading /></div>}
 
                         <div className="flex justify-center w-1/4 mx-auto gap-4">
                             <button type='submit' className=" mx-auto bg-[#6aadc8] p-4 text-white font-bold hover:bg-[#0E7490] rounded-2xl w-full">Add Task</button>
-                            <button type='reset' onClick={() => setShowForm(false)} className="mx-auto bg-white p-4 text-[#4D869C] font-bold hover:bg-red-600 hover:text-white rounded-2xl w-full">Cancel</button>
+                            <button type='reset' onClick={closeAddNewTaskForm} className="mx-auto bg-white p-4 text-[#4D869C] font-bold hover:bg-red-600 hover:text-white rounded-2xl w-full">Cancel</button>
                         </div>
                     </form>
                     : <button onClick={handleClick} className="w-1/6 mx-auto bg-[#4D869C] p-4 text-white font-bold hover:bg-[#0E7490] rounded-2xl"><span className='text-xl'>+</span> New Task</button>}
