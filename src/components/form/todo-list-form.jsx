@@ -88,12 +88,13 @@ const ToDoListForm = ({ listTitle }) => {
             setIsLoading(true)
             const response = await axios.delete(`http://localhost:3000/api/delete-list/${listTitle}`)
             console.log("To-Do List successfully deleted.");
-            await fetchTasks();
+
         } catch (error) {
             console.log("ERROR: ");
         } finally {
             setIsLoading(false)
             router.push('/')
+
         }
 
     }
@@ -129,9 +130,7 @@ const ToDoListForm = ({ listTitle }) => {
 
 
 
-                {/* </DropdownMenuItem>
-                    </DropdownMenuContent>
-                </DropdownMenu> */}
+
 
 
             </div>
