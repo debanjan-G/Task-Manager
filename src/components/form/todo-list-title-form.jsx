@@ -3,9 +3,10 @@ import React, { useState } from 'react'
 import { useRouter } from 'next/navigation';
 import { connectDB } from '@/lib/connectDB';
 import axios from 'axios';
+import { signOut } from '@/auth';
 
 
-const ToDoListTitleForm = () => {
+const ToDoListTitleForm = ({ userInfo }) => {
     const [listName, setListName] = useState('');
     const router = useRouter();
 
@@ -31,14 +32,22 @@ const ToDoListTitleForm = () => {
     }
 
     return (
-        <div className="min-h-[70vh] flex flex-col items-center justify-center gap-4">
+        <>
+            <div className='flex flex-col gap-4 items-center'>
+                <h1 className=' text-center font-bold text-2xl'>Welcome Back</h1>
+                <p className='text-center text-[#0E7490] font-extrabold text-4xl'>{userInfo.name}</p>
 
-            <form onSubmit={handleSubmit} className="flex flex-col gap-4 w-full">
-                <input onChange={handleChange} className="text-xl font-bold shadow-md p-4 rounded-sm w-1/3 mx-auto" autoComplete='off' value={listName} type="text" name="list-name" required placeholder="Enter To-Do List Name" />
-                <button type='submit' className="w-1/6 mx-auto bg-[#4D869C] p-3 rounded-sm text-white font-bold hover:bg-[#0E7490]">Create New ToDo List</button>
-                <p className='w-1/2 mx-auto text-center font-light text-lg'>If a to-do list with the specified name already exists, you will be redirected to the existing list.</p>
-            </form>
-        </div>
+            </div>
+
+            <div className="min-h-[70vh] flex flex-col items-center justify-center gap-4">
+
+                <form onSubmit={handleSubmit} className="flex flex-col gap-4 w-full">
+                    <input onChange={handleChange} className="text-xl font-bold shadow-md p-4 rounded-sm w-1/3 mx-auto" autoComplete='off' value={listName} type="text" name="list-name" required placeholder="Enter To-Do List Name" />
+                    <button type='submit' className="w-1/6 mx-auto bg-[#4D869C] p-3 rounded-sm text-white font-bold hover:bg-[#0E7490]">Create New ToDo List</button>
+                    <p className='w-1/2 mx-auto text-center font-light text-lg'>If a to-do list with the specified name already exists, you will be redirected to the existing list.</p>
+                </form>
+            </div>
+        </>
     )
 }
 
