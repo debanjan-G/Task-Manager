@@ -1,3 +1,3 @@
-import { handler } from "tailwindcss-animate";
+import { handlers } from "@/auth";
 
-export const { GET, POST } = handler;
+export const { GET, POST } = handlers;
