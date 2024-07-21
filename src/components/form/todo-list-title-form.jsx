@@ -4,7 +4,8 @@ import { useRouter } from 'next/navigation';
 import { connectDB } from '@/lib/connectDB';
 import axios from 'axios';
 import { signOut } from '@/auth';
-
+import Image from 'next/image';
+import DP from "../../../public/DP.png"
 
 const ToDoListTitleForm = ({ userInfo }) => {
     const [listName, setListName] = useState('');
@@ -20,7 +21,7 @@ const ToDoListTitleForm = ({ userInfo }) => {
                 const response = await axios.post('http://localhost:3000/api/users', {
                     ...userInfo
                 })
-              
+
                 setUserID(response.data.user._id);
             } catch (error) {
                 console.log("ERROR: ", error);
@@ -61,10 +62,10 @@ const ToDoListTitleForm = ({ userInfo }) => {
             <div className='flex flex-col gap-4 items-center'>
                 <h1 className=' text-center font-bold text-2xl'>Welcome Back</h1>
                 <p className='text-center text-[#0E7490] font-extrabold text-4xl'>{userInfo.name}</p>
-
+                <Image src={DP} alt='DP' className='w-fit h-32 rounded-full' />
             </div>
 
-            <div className="min-h-[70vh] flex flex-col items-center justify-center gap-4">
+            <div className="min-h-[50vh] flex flex-col items-center justify-center gap-4">
 
                 <form onSubmit={handleSubmit} className="flex flex-col gap-4 w-full">
                     <input onChange={handleChange} className="text-xl font-bold shadow-md p-4 rounded-sm w-1/3 mx-auto" autoComplete='off' value={listName} type="text" name="list-name" required placeholder="Enter To-Do List Name" />
