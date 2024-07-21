@@ -44,7 +44,9 @@ const Task = ({ task, fetchTasks }) => {
 
     return (
         <>
-            {loading ? <div className='w-full flex justify-center'> <Loading /> </div> :
+            {loading ?
+                <div className='w-full flex justify-center'> <Loading /> </div>
+                :
                 <div className='text-left px-8 flex items-center gap-4'>
 
                     <input type='checkbox' onChange={handleCheckboxClick} />

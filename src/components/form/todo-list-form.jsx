@@ -136,7 +136,7 @@ const ToDoListForm = ({ listTitle, author }) => {
             <div className='w-1/3 p-4 bg-white flex flex-col justify-center  gap-4 shadow-lg'>
                 {(tasks.length !== 0) ? (tasks.map((task, index) => {
                     return (
-                        <Task setLoading={setIsLoading} key={index} task={task} fetchTasks={fetchTasks} />
+                        <Task  key={index} task={task} fetchTasks={fetchTasks} />
                     )
                 })
                 ) : <p className=" my-4 text-xl text-center text-slate-700 font-light">Your To-Do List is Empty!</p>}
