@@ -1,5 +1,5 @@
 'use client'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation';
 import { connectDB } from '@/lib/connectDB';
 import axios from 'axios';
@@ -9,6 +9,25 @@ import { signOut } from '@/auth';
 const ToDoListTitleForm = ({ userInfo }) => {
     const [listName, setListName] = useState('');
     const router = useRouter();
+
+    console.log(userInfo);
+
+    useEffect(() => {
+
+        const saveUser = async () => {
+            try {
+                const response = await axios.post('http://localhost:3000/api/users', {
+                    ...userInfo
+                })
+                console.log(response.data);
+            } catch (error) {
+                console.log("ERROR: ", error);
+            }
+        }
+
+        saveUser();
+
+    }, [userInfo])
 
     const handleChange = (e) => {
         const listName = e.target.value;
