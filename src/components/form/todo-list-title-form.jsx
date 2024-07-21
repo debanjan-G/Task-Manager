@@ -43,7 +43,7 @@ const ToDoListTitleForm = ({ userInfo }) => {
             e.preventDefault();
             console.log("AUTHOR ID ", userID);
             // Check if TaskList already exists
-            const response = await axios.post('http://localhost:3000/api/create-new-list', {
+            const response = await axios.post('http://localhost:3000/api/taskList', {
                 author: userID, title: listName,
             })
             console.log(response);

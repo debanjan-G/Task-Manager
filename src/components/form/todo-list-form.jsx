@@ -87,7 +87,7 @@ const ToDoListForm = ({ listTitle, author }) => {
     const deleteList = async (e) => {
         try {
             setIsLoading(true)
-            const response = await axios.delete(`http://localhost:3000/api/delete-list/${listTitle}`)
+            const response = await axios.delete(`http://localhost:3000/api/taskList/${listTitle}`)
             console.log("To-Do List successfully deleted.");
 
         } catch (error) {

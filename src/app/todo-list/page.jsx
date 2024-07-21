@@ -2,6 +2,8 @@ import ToDoListTitleForm from "@/components/form/todo-list-title-form";
 import { auth, signIn, signOut } from "@/auth";
 import SigninImage from "../../../public/signin-image.jpg"
 import Image from "next/image";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
+
 
 import SignoutButton from "@/components/ui/SignoutButton";
 
@@ -24,13 +26,20 @@ export default async function CreateNewList() {
                 </div>
                 :
                 <div className="flex flex-col items-center justify-center gap-8  w-1/2 mx-auto h-[85vh]">
-                    <h1 className="text-red-500 text-4xl text-center font-semibold">Please sign in with your Google Account to create a to-do list. </h1>
+                    <Alert>
+                        {/* <Terminal className="h-4 w-4" /> */}
+                        <AlertTitle className='text-lg font-semibold'> Unlock the full potential of TaskTrackr!</AlertTitle>
+                        <AlertDescription className='text-xl text-slate-600'>
+                            Sign in with Google and take control of your to-do list today.
+                        </AlertDescription>
+                    </Alert>
+
                     <Image src={SigninImage} alt='signin-image' className="w-fit h-80" />
                     <form action={async () => {
                         'use server'
                         await signIn()
                     }}>
-                        <button className="mx-auto bg-[#4D869C] p-3 rounded-sm text-white font-bold hover:bg-[#0E7490]">Signin with Google</button>
+                        <button className="mx-auto bg-[#4D869C] py-2 px-4 rounded-sm text-white font-bold hover:bg-[#0E7490] text-xl">Signin</button>
                     </form>
                 </div>
 
