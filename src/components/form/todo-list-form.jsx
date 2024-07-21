@@ -21,7 +21,8 @@ import DeleteTaskListIcon from '../ui/DeleteTaskListIcon';
 
 
 
-const ToDoListForm = ({ listTitle }) => {
+const ToDoListForm = ({ listTitle, author }) => {
+    console.log("author prop = ", author);
     const router = useRouter()
 
     const [showForm, setShowForm] = useState(false);
@@ -38,7 +39,7 @@ const ToDoListForm = ({ listTitle }) => {
         try {
             setIsLoading(true);
             const response = await axios.get(
-                `http://localhost:3000/api/tasks?list=${listTitle}`
+                `http://localhost:3000/api/tasks?list=${listTitle}&author=${author.name}`
             );
             const fetchedTasks = response.data.tasks;
             console.log("Fetched Tasks: ", fetchedTasks);
@@ -65,7 +66,7 @@ const ToDoListForm = ({ listTitle }) => {
             setIsLoading(true)
             e.preventDefault();
 
-            const response = await axios.post('http://localhost:3000/api/tasks', { taskList: listTitle, task })
+            const response = await axios.post('http://localhost:3000/api/tasks', { taskList: listTitle, author: author.name, task })
             console.log(response);
             // Fetching the tasks from DB to update the list on screen
             await fetchTasks();
@@ -99,11 +100,14 @@ const ToDoListForm = ({ listTitle }) => {
 
     }
 
+    const firstName = author.name.split(" ")[0] // only the name of the author (No surname)
+
 
     return (
         <div className='flex flex-col min-h-[75vh] items-center justify-center gap-4 w-full'>
+            {/* <p className='font-semibold text-xl '>Author: {author.name}</p> */}
             <div className=' bg-[#4D869C] flex items-center justify-between p-4  w-1/3'>
-                <h1 className='text-white text-2xl font-semibold text-center'>{listTitle} TO-DO
+                <h1 className='text-white text-2xl font-semibold text-center'>{firstName}'s  {" "}{listTitle} TO-DO
                 </h1>
 
 
@@ -127,12 +131,6 @@ const ToDoListForm = ({ listTitle }) => {
                         </AlertDialogFooter>
                     </AlertDialogContent>
                 </AlertDialog>
-
-
-
-
-
-
             </div>
 
             <div className='w-1/3 p-4 bg-white flex flex-col justify-center  gap-4 shadow-lg'>

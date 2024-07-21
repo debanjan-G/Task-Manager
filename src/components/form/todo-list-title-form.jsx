@@ -46,9 +46,7 @@ const ToDoListTitleForm = ({ userInfo }) => {
             const response = await axios.post('http://localhost:3000/api/create-new-list', {
                 author: userID, title: listName,
             })
-
             console.log(response);
-
             router.push(`/todo-list/${listName}`)
 
         } catch (error) {
