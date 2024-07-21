@@ -110,10 +110,9 @@ const ToDoListTitleForm = ({ userInfo }) => {
 
             {loading ?
                 <div className='flex justify-center items-center'> <Loading /></div>
-
                 :
                 <div className='flex flex-col items-center ga-4'>
-                    <h1 className='my-4 text-3xl font-bold text-[#0E7490]'>Total Task Lists Created:{taskListCount}</h1>
+                    <h1 className='my-4 text-3xl font-bold text-[#0E7490]'>Total Task Lists Created: {taskListCount}</h1>
                     <div className='flex gap-4'>
                         {taskLists.map((taskList, index) => <TaskListPreview key={index} listTitle={taskList.title} listAuthor={taskList.author} count={taskListCount} />)}
                     </div>

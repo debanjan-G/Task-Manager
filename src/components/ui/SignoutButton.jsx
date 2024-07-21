@@ -1,5 +1,6 @@
 import React from 'react'
 import { auth, signOut } from '@/auth';
+import LogoutSVG from './LogoutSVG';
 
 
 const SignoutButton = async () => {
@@ -7,19 +8,21 @@ const SignoutButton = async () => {
     const session = await auth();
     return (
 
-        <div className='text-center'>
+        <span className='text-right'>
             {session && session.user ?
                 <form action={async () => {
                     'use server'
                     await signOut();
                     // router.push('/')
                 }}>
-                    <button type='submit' className='mx-auto bg-red-500 hover:bg-red-600 p-3 rounded-sm text-white font-bold'>Logout</button>
+                    <button type='submit'>
+                        <LogoutSVG />
+                    </button>
                 </form>
                 :
                 null}
 
-        </div>
+        </span>
     )
 }
 
