@@ -7,9 +7,13 @@ export async function POST(req) {
     await connectDB();
     const reqBody = await req.json(); // get the List title from req body
     const taskTitle = reqBody.title;
+    const authorID = reqBody.author;
 
     // check if task list already exists
-    const taskList = await TaskList.findOne({ title: taskTitle });
+    const taskList = await TaskList.findOne({
+      title: taskTitle,
+      author: authorID,
+    });
 
     if (taskList) {
       console.log("TaskList already exists.");
@@ -23,13 +27,14 @@ export async function POST(req) {
     // create a new document
     const newTaskList = new TaskList({
       title: taskTitle,
+      author: authorID,
     });
 
     await newTaskList.save();
 
     return NextResponse.json(
       {
-        successs: true,
+        success: true,
         savedList: newTaskList,
         url: `/todo-list/${taskTitle}`,
       },

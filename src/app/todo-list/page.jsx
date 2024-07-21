@@ -22,7 +22,7 @@ export default async function CreateNewList() {
                     <ToDoListTitleForm userInfo={session.user} />
                 </div>
                 :
-                <div className="flex flex-col items-center justify-center gap-8  w-1/2 mx-auto h-screen">
+                <div className="flex flex-col items-center justify-center gap-8  w-1/2 mx-auto h-[85vh]">
                     <h1 className="text-red-500 text-4xl text-center font-semibold">Please sign in with your Google Account to create a to-do list. </h1>
                     <Image src={SigninImage} alt='signin-image' className="w-fit h-80" />
                     <form action={async () => {

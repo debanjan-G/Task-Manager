@@ -4,16 +4,16 @@ import { NextResponse } from "next/server";
 export async function POST(req) {
   try {
     const reqBody = await req.json();
-    console.log("REQBODY: ", reqBody);
     const { name, email } = reqBody;
 
     //checking if user is already saved in DB
     const user = await User.findOne({ email });
-    
+
     if (user) {
       return NextResponse.json({
         success: true,
         msg: "User login successful.",
+        user,
       });
     }
 

@@ -8,6 +8,7 @@ import { signOut } from '@/auth';
 
 const ToDoListTitleForm = ({ userInfo }) => {
     const [listName, setListName] = useState('');
+    const [userID, setUserID] = useState('')
     const router = useRouter();
 
     console.log(userInfo);
@@ -19,7 +20,8 @@ const ToDoListTitleForm = ({ userInfo }) => {
                 const response = await axios.post('http://localhost:3000/api/users', {
                     ...userInfo
                 })
-                console.log(response.data);
+              
+                setUserID(response.data.user._id);
             } catch (error) {
                 console.log("ERROR: ", error);
             }
@@ -38,9 +40,13 @@ const ToDoListTitleForm = ({ userInfo }) => {
 
         try {
             e.preventDefault();
-
+            console.log("AUTHOR ID ", userID);
             // Check if TaskList already exists
-            const response = await axios.post('http://localhost:3000/api/create-new-list', { title: listName })
+            const response = await axios.post('http://localhost:3000/api/create-new-list', {
+                author: userID, title: listName,
+            })
+
+            console.log(response);
 
             router.push(`/todo-list/${listName}`)
 
