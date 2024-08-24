@@ -2,6 +2,9 @@
 
 TaskTrackr is a full-stack Task Manager application designed to enhance productivity with cutting-edge technology and a user-centric approach.
 
+## Demo Video:
+https://github.com/user-attachments/assets/153f3879-2c6a-49dd-ad85-91594928a4a7
+
 ## Key Features:
 - **Google Authentication**: Sign in securely with your Google account using Auth.js.
 - **Dynamic Task Management**: Effortlessly add, delete, and view tasks, from simple to complex.
