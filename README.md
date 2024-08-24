@@ -1,3 +1,24 @@
+# 🚀 TaskTrackr: Your Ultimate Productivity Solution
+
+TaskTrackr is a full-stack Task Manager application designed to enhance productivity with cutting-edge technology and a user-centric approach.
+
+## Key Features:
+- **Google Authentication**: Sign in securely with your Google account using Auth.js.
+- **Dynamic Task Management**: Effortlessly add, delete, and view tasks, from simple to complex.
+- **Task Lists**: Organize tasks into lists for better clarity and workflow management.
+- **Secure Storage**: All data is securely stored in MongoDB for reliable access and protection.
+- **Modern UI**: Built with Tailwind CSS and Shadcn for a sleek, responsive user interface.
+
+## Tech Stack:
+- **Next.js**: Scalable, high-performance application framework.
+- **Auth.js**: Google provider for secure authentication.
+- **MongoDB**: Secure and efficient task management.
+- **Tailwind CSS & Shadcn**: Crafting a modern, responsive UI.
+
+TaskTrackr is currently in its final stages of development, and I'm excited to bring it to life. It has been a hands-on experience with Next.js, resulting in a powerful and intuitive task management platform.
+
+
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
